@@ -16,6 +16,17 @@ public class PlayerFire : MonoBehaviour
     public GameObject firePoint;        //폭탄 발사위치
     public float power = 20.0f;         //폭탄 던질 파워
 
+    // [3]
+    Camera mainCamera;
+    
+
+    void Start()
+    {
+        mainCamera = GetComponentInChildren<Camera>();
+        
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -100,10 +111,19 @@ public class PlayerFire : MonoBehaviour
             //rb.AddForce(Camera.main.transform.forward * power, ForceMode.Impulse);
 
             //45도 각도로 발사
-            Vector3 dir = Camera.main.transform.forward + (Camera.main.transform.up * 2);
+            Vector3 dir = transform.forward + transform.up;//Camera.main.transform.forward + (Camera.main.transform.up * 2);
             dir.Normalize();
             rb.AddForce(dir * power, ForceMode.Impulse);
 
+        }
+
+        if(Input.GetKey(KeyCode.Alpha1))
+        {
+            mainCamera.fieldOfView = 10f; //30이면 2배, 20이면 3배
+        }
+        else if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            mainCamera.fieldOfView = 60f;
         }
     }
 }
